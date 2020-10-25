@@ -8,9 +8,21 @@ import sys
 def get_scatter(df=None):
 
 	if df is None:
-		x = [0, 50, 100, 200, 300, 400, 500, 600]
-		y = [0, 1.5, 2, 4, 7.5, 12.5, 20, 40.6]
-		y1 = [0, 1.7, 3, 5, 8.5, 15.5, 24, 42.6]
+		# x = [0, 50, 100, 200, 300, 400, 500, 600]
+		# y = [0, 1.5, 2, 4, 7.5, 12.5, 20, 40.6]
+		# y1 = [0, 1.7, 3, 5, 8.5, 15.5, 24, 42.6]
+
+		d1 = np.random.normal(5, 0.5, 200)
+		d2 = np.random.normal(30, 1.2, 60)
+		d3 = np.random.normal(6, 1, 60)
+		d11 = np.random.normal(5, 0.5, 200)
+		d22 = np.random.normal(30, 1.2, 60)
+		d33 = np.random.normal(6, 1, 60)
+
+		y = np.concatenate((d1, d2, d3)).flatten()
+		y1 = np.concatenate((d11, d22, d33)).flatten()
+		x = np.arange(len(y))
+
 	else:
 		x = np.arange(len(df))
 		y = df['S1']
@@ -79,8 +91,7 @@ def get_bar(color='steelblue', title='', df=None):
 	    for r in range(SIZE):
 	    	x.append(i)
 	df['bin'] = np.array(x)
-	df = df.groupby('bin').max()
-	
+	df = df.groupby('bin').max()	
 
 
 	fig = go.Figure()
@@ -95,6 +106,7 @@ def get_bar(color='steelblue', title='', df=None):
 				        y= 0.8,
                       	font=dict(size=20, color='black')),
 					template='plotly_dark',
+					barmode = 'stack',
 					height=330,
 					width= 400,
 					font=dict(family="Courier",
