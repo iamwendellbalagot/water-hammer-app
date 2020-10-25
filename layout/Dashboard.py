@@ -19,7 +19,6 @@ items = [
 row_style = {
 	'padding': '5px',
 }
-
 col_style = {
 	'padding': '7px',
 	'backgroundColor': '#373a40',
@@ -356,6 +355,17 @@ Layout = html.Div(
 			                className='input-group mb-3',
 			                style={'width': '80%', 'margin': '10px auto 30px auto'}
 			            ),
+			            dcc.Loading(
+			            	type = 'graph',
+			            	fullscreen= True,
+			            	style = {
+			            		'backgroundColor': 'black',
+			            		'opacity': '0.7'
+			            	},
+			            	children = [
+			            		html.Div(id = 'loader__export')
+			            	]
+			            )
 					]
 				)
 			]

@@ -70,7 +70,10 @@ def get_bar(color='steelblue', title='', df=None):
 		modulo = len(data) % SIZE
 		df = pd.DataFrame()
 		df['data'] = data
-		df = df[:-modulo]
+		if modulo> 0:
+			df = df[:-modulo]
+		df.dropna(inplace = True)
+
 	x = []
 	for i in range(int(len(df.data)/SIZE)):
 	    for r in range(SIZE):
@@ -88,7 +91,7 @@ def get_bar(color='steelblue', title='', df=None):
 
 	fig.update_layout(title=dict(
 						text = "<b>{}</b>".format(title),
-				        x=0.5,
+				        x=0.6,
 				        y= 0.8,
                       	font=dict(size=20, color='black')),
 					template='plotly_dark',

@@ -8,6 +8,7 @@ from flask import request
 import flask
 
 import serial
+import time
 import numpy as np
 import pandas as pd
 
@@ -16,12 +17,12 @@ import layout.Dashboard as Home
 import processSerialData.processSerialData as psd
 import plotGenerator.plotGenerator as pg
 
-from flaskwebgui import FlaskUI #get the FlaskUI class
+#from flaskwebgui import FlaskUI #get the FlaskUI class
 server = flask.Flask(__name__)
-ui = FlaskUI(app=server,
-		port=5020,
-		height = 720,
-		width = 1380)
+# ui = FlaskUI(app=server,
+# 		port=5020,
+# 		height = 720,
+# 		width = 1380)
 
 home__layout = Home.Layout
 
@@ -148,6 +149,20 @@ def update__scatter(start__btn, interval__scatter, test__id, n_running, check__b
 	except:
 		raise PreventUpdate()
 
+@app.callback(Output('loader__export', 'children'),
+			 [Input('controls__exportData', 'n_clicks')])
+def call__loader(btn):
+	changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+	try:
+		if 'controls__exportData' in changed_id:
+			# psd.get_dataframe(table=export__input)
+			time.sleep(1.5)
+			return no_update
+		else:
+			return no_update
+	except:
+		raise PreventUpdate()
+
 @app.callback([Output('td__min', 'children'),
 			   Output('td__max', 'children'),
 			   Output('td__mean', 'children'),
@@ -206,6 +221,6 @@ def close(shutdown__btn):
 
 
 if __name__ == '__main__':
-	#app.run_server(debug=True, port=2020)
-	ui.run()
+	app.run_server(debug=True, port=5000)
+	#ui.run()
 
